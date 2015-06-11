@@ -1,0 +1,94 @@
+<!-- Validation failure messages -->
+
+<% if @deal.errors.any? %>
+  <% @deal.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- Responsive panel example -->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Edit Deal #<%= @deal.id %></h3>
+      </div>
+      <div class="panel-body">
+        <form action="/update_deal/<%= @deal.id %>" method="post" class="form-horizontal">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+          <!-- Label and input for name -->
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">
+              Name
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @deal.name %>">
+            </div>
+          </div>
+
+          <!-- Label and input for tag_line -->
+          <div class="form-group">
+            <label for="tag_line" class="col-sm-2 control-label">
+              Tag line
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="tag_line" name="tag_line" placeholder="Tag line" class="form-control" value="<%= @deal.tag_line %>">
+            </div>
+          </div>
+
+          <!-- Label and input for retailer_id -->
+          <div class="form-group">
+            <label for="retailer_id" class="col-sm-2 control-label">
+              Retailer
+            </label>
+            <div class="col-sm-10">
+              <%= select_tag(:retailer_id, options_from_collection_for_select(Retailer.all, :id, :retailer, @deal.retailer_id), :class => "form-control") %>
+            </div>
+          </div>
+
+          <!-- Label and input for description -->
+          <div class="form-group">
+            <label for="description" class="col-sm-2 control-label">
+              Description
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="description" name="description" placeholder="Description" class="form-control" value="<%= @deal.description %>">
+            </div>
+          </div>
+
+                    <!-- Label and input for tags -->
+          <div class="form-group">
+            <label for="tag_id" class="col-sm-2 control-label">
+              tag
+            </label>
+            <div class="col-sm-10">
+              <%= select_tag(:tag_id, options_from_collection_for_select(Tag.all, :id, :tags_name, @deal.tag_id), :class => "form-control") %>
+            </div>
+          </div>
+
+          <!-- Label and input for user_id -->
+
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button class="btn btn-warning">
+                Update Deal
+              </button>
+              or
+              <a href="/deals/<%= @deal.id %>">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- End responsive panel example -->
